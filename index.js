@@ -1,11 +1,15 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var port = process.env.port || 3000;
+var path = require('path');
 
-app.get('/', (requestAnimationFrame, res) => {
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
     // res.send('<h1>Hello world</h1>');
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 
@@ -18,9 +22,9 @@ app.get('/', (requestAnimationFrame, res) => {
 
 io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
-      io.emit('chat message', msg);
+        io.emit('chat message', msg);
     });
-  });
+});
 
 http.listen(port, () => {
     console.log('listening on 3000');
