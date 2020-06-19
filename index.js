@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 http.listen(port, () => {
-    console.log('listening on 3000');
+    console.log(`Listening on port ${port}`);
 });
 
 
